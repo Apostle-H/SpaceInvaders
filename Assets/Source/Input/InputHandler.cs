@@ -10,6 +10,7 @@ public class InputHandler : MonoBehaviour
     private MainInputAction _mainInputAction;
     
     public MainInputAction.PlayerInputActions PlayerInput { get { return _mainInputAction.playerInput; } }
+    public MainInputAction.GameInputActions GameInput { get { return _mainInputAction.gameInput; } }
 
     private void Awake()
     {

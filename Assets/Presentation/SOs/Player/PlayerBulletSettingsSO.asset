@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: PlayerBulletSettingsSO
   m_EditorClassIdentifier: 
   <TravelSpeed>k__BackingField: 7
+  <Damage>k__BackingField: 5
+  <TargetTag>k__BackingField: Enemy

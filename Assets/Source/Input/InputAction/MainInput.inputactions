@@ -70,6 +70,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "gameInput",
+            "id": "159d8aa8-1dc9-4bea-b37b-34b003e6d9c7",
+            "actions": [
+                {
+                    "name": "restart",
+                    "type": "Button",
+                    "id": "cfa8d195-b7ff-42dd-975f-7703e657d09d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2701bf17-1dd7-4f8b-b393-92a28e3fe460",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

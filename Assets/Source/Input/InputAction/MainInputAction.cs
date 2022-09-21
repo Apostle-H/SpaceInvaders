@@ -92,6 +92,34 @@ public partial class @MainInputAction : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""gameInput"",
+            ""id"": ""159d8aa8-1dc9-4bea-b37b-34b003e6d9c7"",
+            ""actions"": [
+                {
+                    ""name"": ""restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfa8d195-b7ff-42dd-975f-7703e657d09d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2701bf17-1dd7-4f8b-b393-92a28e3fe460"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -100,6 +128,9 @@ public partial class @MainInputAction : IInputActionCollection2, IDisposable
         m_playerInput = asset.FindActionMap("playerInput", throwIfNotFound: true);
         m_playerInput_movement = m_playerInput.FindAction("movement", throwIfNotFound: true);
         m_playerInput_shoot = m_playerInput.FindAction("shoot", throwIfNotFound: true);
+        // gameInput
+        m_gameInput = asset.FindActionMap("gameInput", throwIfNotFound: true);
+        m_gameInput_restart = m_gameInput.FindAction("restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -196,9 +227,46 @@ public partial class @MainInputAction : IInputActionCollection2, IDisposable
         }
     }
     public PlayerInputActions @playerInput => new PlayerInputActions(this);
+
+    // gameInput
+    private readonly InputActionMap m_gameInput;
+    private IGameInputActions m_GameInputActionsCallbackInterface;
+    private readonly InputAction m_gameInput_restart;
+    public struct GameInputActions
+    {
+        private @MainInputAction m_Wrapper;
+        public GameInputActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @restart => m_Wrapper.m_gameInput_restart;
+        public InputActionMap Get() { return m_Wrapper.m_gameInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameInputActions set) { return set.Get(); }
+        public void SetCallbacks(IGameInputActions instance)
+        {
+            if (m_Wrapper.m_GameInputActionsCallbackInterface != null)
+            {
+                @restart.started -= m_Wrapper.m_GameInputActionsCallbackInterface.OnRestart;
+                @restart.performed -= m_Wrapper.m_GameInputActionsCallbackInterface.OnRestart;
+                @restart.canceled -= m_Wrapper.m_GameInputActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_GameInputActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @restart.started += instance.OnRestart;
+                @restart.performed += instance.OnRestart;
+                @restart.canceled += instance.OnRestart;
+            }
+        }
+    }
+    public GameInputActions @gameInput => new GameInputActions(this);
     public interface IPlayerInputActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+    }
+    public interface IGameInputActions
+    {
+        void OnRestart(InputAction.CallbackContext context);
     }
 }
