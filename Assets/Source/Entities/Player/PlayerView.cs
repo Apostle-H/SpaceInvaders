@@ -27,7 +27,6 @@ public class PlayerView : MonoBehaviour
 
     public void UpdateHealth(int newHealth)
     {
-        Debug.Log(newHealth);
         if (newHealth > currentHealth && newHealth < healthUIObjs.Length)
         {
             for (int heartNum = currentHealth - 1; heartNum < newHealth - 1; heartNum++)
