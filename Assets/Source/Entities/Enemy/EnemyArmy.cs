@@ -6,28 +6,43 @@ using Random = UnityEngine.Random;
 
 public class EnemyArmy : MonoBehaviour
 {
-    [Header("Scripts")] 
-    [SerializeField] private EnemiesPull enemiesPull;
-    [SerializeField] private Scoring scoring;
-
+    [Header("Army Settings")] 
     [SerializeField] private float moveDownTimeDelay;
     [SerializeField] private float shootTimeDelayMin;
     [SerializeField] private float shootTimeDelayMax;
 
+    [Space(15f)]
+    
+    [SerializeField] private bool randomArmySize;
+    [SerializeField] [Range(1, 15)] private int collumns;
+    [SerializeField] [Range(1, 5)] private int rows;
+    
+    [SerializeField] private GameObject[] enemiesPrefabs;
+
     public event VoidHandler OnArmyDefeat;
     
     private Enemy _lastEnemy;
+    private EnemiesPull _enemiesPull;
     private List<Vector2> _frontEnemiesPos = new List<Vector2>();
     
     private void Awake()
     {
+        if (randomArmySize)
+        {
+            collumns = Random.Range(1, 16);
+            rows = Random.Range(1, 5);
+        }
+        
+        _enemiesPull = new EnemiesPull(transform, collumns, rows, enemiesPrefabs);
+        _enemiesPull.Init();
+        
         CalcualteFront();
 
-        _frontEnemiesPos.ForEach(frontEnemyPos => enemiesPull.Enemies[(int)frontEnemyPos.x, (int)frontEnemyPos.y].OnDie += 
+        _frontEnemiesPos.ForEach(frontEnemyPos => _enemiesPull.Enemies[(int)frontEnemyPos.x, (int)frontEnemyPos.y].OnDie += 
             (score) => PassFrontPos((int)frontEnemyPos.x, (int)frontEnemyPos.y));
-        enemiesPull.Enemies.ForEach(enemy => enemy.OnDie += OneEnemyDie);
+        _enemiesPull.Enemies.ForEach(enemy => enemy.OnDie += OneEnemyDie);
     }
-
+    
     private void OnEnable()
     {
         MoveDownArmyHolder();
@@ -37,7 +52,7 @@ public class EnemyArmy : MonoBehaviour
     private void OnDisable()
     {
         StopAllCoroutines();
-        enemiesPull.Enemies.ForEach(enemy => MoveEnemy(enemy, Vector2.zero));
+        _enemiesPull.Enemies.ForEach(enemy => MoveEnemy(enemy, Vector2.zero));
     }
 
     #region ArmyMove
@@ -51,14 +66,14 @@ public class EnemyArmy : MonoBehaviour
             _lastEnemy.OnStop -= MoveDownArmyHolder;
         }
 
-        enemiesPull.Enemies.ForEach(enemy => MoveEnemy(enemy, Vector2.down));
+        _enemiesPull.Enemies.ForEach(enemy => MoveEnemy(enemy, Vector2.down));
 
         _lastEnemy.OnStop += MoveDownArmyHolder;
     }
 
     private void MoveEnemy(Enemy enemy, Vector2 direction)
     {
-        if (!enemy.isAlive)
+        if (!enemy.IsAlive)
         {
             return;
         }
@@ -79,9 +94,9 @@ public class EnemyArmy : MonoBehaviour
 
     private void CalcualteFront()
     {
-        for (int rowIndex = enemiesPull.Enemies.GetLength(1) - 1; rowIndex < enemiesPull.Enemies.GetLength(1); rowIndex++)
+        for (int rowIndex = _enemiesPull.Enemies.GetLength(1) - 1; rowIndex < _enemiesPull.Enemies.GetLength(1); rowIndex++)
         {
-            for (int collumnIndex = 0; collumnIndex < enemiesPull.Enemies.GetLength(0); collumnIndex++)
+            for (int collumnIndex = 0; collumnIndex < _enemiesPull.Enemies.GetLength(0); collumnIndex++)
             {
                 _frontEnemiesPos.Add(new Vector2(collumnIndex, rowIndex));
             }
@@ -94,7 +109,7 @@ public class EnemyArmy : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
 
         Vector2 randomFrontEnemyPos = _frontEnemiesPos[Random.Range(0, _frontEnemiesPos.Count)];
-        Enemy randomFrontEnemy =  enemiesPull.Enemies[(int)randomFrontEnemyPos.x, (int)randomFrontEnemyPos.y];
+        Enemy randomFrontEnemy =  _enemiesPull.Enemies[(int)randomFrontEnemyPos.x, (int)randomFrontEnemyPos.y];
         
         randomFrontEnemy.PerformShoot();
 
@@ -107,7 +122,7 @@ public class EnemyArmy : MonoBehaviour
 
     private void OneEnemyDie(int scoreToAdd)
     {
-        scoring.AddScore(scoreToAdd);
+        Scoring.AddScore(scoreToAdd);
         CheckIfArmyDefeat();
     }
     
@@ -121,13 +136,13 @@ public class EnemyArmy : MonoBehaviour
         }
         
         _frontEnemiesPos.Add(new Vector2(collumnIndex, rowIndex - 1));
-        enemiesPull.Enemies[collumnIndex, rowIndex - 1].OnDie += 
+        _enemiesPull.Enemies[collumnIndex, rowIndex - 1].OnDie += 
             (score) => PassFrontPos(collumnIndex,rowIndex - 1);
     }
 
     private void CheckIfArmyDefeat()
     {
-        if (enemiesPull.Enemies.Any(enemy => enemy.isAlive))
+        if (_enemiesPull.Enemies.Any(enemy => enemy.IsAlive))
         {
             return;
         }

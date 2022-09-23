@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1204140003}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &237319231
 MonoBehaviour:
@@ -169,57 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthPanel: {fileID: 775012857}
   healthPrefab: {fileID: 7692786012444023058, guid: d4979f626f237a6499421a970348c309, type: 3}
---- !u!1 &409751649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 409751650}
-  - component: {fileID: 409751651}
-  m_Layer: 0
-  m_Name: EnemiesPull
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &409751650
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409751649}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1432209369}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &409751651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409751649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ca7b4c74a960f4459495b43ea7273ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  collumns: 12
-  rows: 3
-  enemiesPrefabs:
-  - {fileID: 1838759535975982340, guid: 03cd545d9daa2324190fd2557a63119a, type: 3}
-  - {fileID: 7555018063399779316, guid: 26e79e28650b93347831189775aef944, type: 3}
-  - {fileID: 2087297673420978948, guid: 309a8f56d3381a74ebb8a2ef0e074776, type: 3}
-  - {fileID: 4575072369738479568, guid: 313ed7dee33aa62459eca26626c357ba, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 618063513}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -348,11 +297,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e83252d9baac000498dc8d760137dd96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesPull: {fileID: 409751651}
-  scoring: {fileID: 974056582}
   moveDownTimeDelay: 2
-  shootTimeDelayMin: 0.3
+  shootTimeDelayMin: 0.5
   shootTimeDelayMax: 1
+  randomArmySize: 1
+  collumns: 10
+  rows: 3
+  enemiesPrefabs:
+  - {fileID: 1838759535975982340, guid: 03cd545d9daa2324190fd2557a63119a, type: 3}
+  - {fileID: 7555018063399779316, guid: 26e79e28650b93347831189775aef944, type: 3}
+  - {fileID: 2087297673420978948, guid: 309a8f56d3381a74ebb8a2ef0e074776, type: 3}
+  - {fileID: 4575072369738479568, guid: 313ed7dee33aa62459eca26626c357ba, type: 3}
 --- !u!114 &619614166 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 883036995807839781, guid: e4b69bcdd4453874f9ee6b63141de5a4, type: 3}
@@ -869,7 +824,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 974056581}
-  - component: {fileID: 974056582}
   - component: {fileID: 974056583}
   m_Layer: 0
   m_Name: Scoring
@@ -893,18 +847,6 @@ Transform:
   m_Father: {fileID: 1464035772}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &974056582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974056580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1740646a85fd1374d948a32d100c367b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &974056583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,7 +859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed35cebd3ab39924f8f3e230cf22275f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoring: {fileID: 974056582}
   scoreUI: {fileID: 827902968}
 --- !u!1 &999297654
 GameObject:
@@ -949,53 +890,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1727884301}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1051531905
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1051531907}
-  - component: {fileID: 1051531906}
-  m_Layer: 0
-  m_Name: PlayerBulletPull
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1051531906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051531905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c96ba26e6d60a434f9562cad0be004ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletsParentObject: {fileID: 999297655}
-  bulletPrefab: {fileID: 8149541238220575744, guid: 2086d853d71f3814c93b7ef4d1595706, type: 3}
-  bulletsCount: 10
---- !u!4 &1051531907
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051531905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1204140003}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1133104904
 GameObject:
@@ -1043,10 +937,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 818761190}
   player: {fileID: 619614166}
-  playerInvoker: {fileID: 1674405512}
   enemyArmy: {fileID: 618063515}
   loseZone: {fileID: 6913094005344862682}
-  scoring: {fileID: 974056582}
   winView: {fileID: 1307876595}
   loseView: {fileID: 1307876594}
 --- !u!1 &1204140002
@@ -1078,7 +970,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1674405513}
-  - {fileID: 1051531907}
   - {fileID: 237319230}
   m_Father: {fileID: 1464035772}
   m_RootOrder: 1
@@ -1437,8 +1328,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 618063514}
-  - {fileID: 2069099828}
-  - {fileID: 409751650}
   m_Father: {fileID: 1464035772}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2050,53 +1939,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2069099827
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2069099828}
-  - component: {fileID: 2069099829}
-  m_Layer: 0
-  m_Name: EnemiesBulletPull
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2069099828
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069099827}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1432209369}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2069099829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069099827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c96ba26e6d60a434f9562cad0be004ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletsParentObject: {fileID: 1292732797}
-  bulletPrefab: {fileID: 6538699331172610684, guid: 244d7ec901e97c845a8cb3ad11932325, type: 3}
-  bulletsCount: 5
 --- !u!1 &2137483654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2230,7 +2072,11 @@ PrefabInstance:
     - target: {fileID: 883036995807839781, guid: e4b69bcdd4453874f9ee6b63141de5a4, type: 3}
       propertyPath: bulletsPull
       value: 
-      objectReference: {fileID: 1051531906}
+      objectReference: {fileID: 0}
+    - target: {fileID: 883036995807839781, guid: e4b69bcdd4453874f9ee6b63141de5a4, type: 3}
+      propertyPath: bulletsParentObject
+      value: 
+      objectReference: {fileID: 999297655}
     - target: {fileID: 883036995807839782, guid: e4b69bcdd4453874f9ee6b63141de5a4, type: 3}
       propertyPath: m_RootOrder
       value: 1

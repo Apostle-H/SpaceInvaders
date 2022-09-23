@@ -148,10 +148,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   invoker: {fileID: 0}
-  bulletsPull: {fileID: 0}
+  playerView: {fileID: 0}
   rb: {fileID: 883036995807839780}
   firePoint: {fileID: 883036997026106851}
   playerSettingsSO: {fileID: 11400000, guid: 9cc46a0dea0eab04b8023406920bfcb7, type: 2}
+  bulletsParentObject: {fileID: 0}
+  bulletPrefab: {fileID: 8149541238220575744, guid: 2086d853d71f3814c93b7ef4d1595706, type: 3}
+  bulletsCount: 10
 --- !u!1 &883036997026106876
 GameObject:
   m_ObjectHideFlags: 0

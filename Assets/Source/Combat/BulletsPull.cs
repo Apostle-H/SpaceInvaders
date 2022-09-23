@@ -4,22 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BulletsPull : MonoBehaviour
+public class BulletsPull
 {
-    [Header("Pull Settings")]
-    [SerializeField] private Transform bulletsParentObject;
+    private Transform _bulletsParentObject;
     
-    [Header("Bullets")]
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private uint bulletsCount;
+    private GameObject _bulletPrefab;
+    private int _bulletsCount;
 
     private Queue<Bullet> _bulletsPull = new Queue<Bullet>();
 
-    private void Awake()
+    public BulletsPull(Transform bulletsParentObject, GameObject bulletPrefab, int bulletCount)
     {
-        for (int bulletsNum = 0; bulletsNum < bulletsCount; bulletsNum++)
+        _bulletsParentObject = bulletsParentObject;
+        _bulletPrefab = bulletPrefab;
+        _bulletsCount = bulletCount;
+    }
+    
+    public void Init()
+    {
+        for (int bulletsNum = 0; bulletsNum < _bulletsCount; bulletsNum++)
         {
-            Bullet tempBullet = Instantiate(bulletPrefab, bulletsParentObject).GetComponent<Bullet>();
+            Bullet tempBullet = GameObject.Instantiate(_bulletPrefab, _bulletsParentObject).GetComponent<Bullet>();
             tempBullet.OnBulletDisappear += ReturnBullet;
             
             tempBullet.gameObject.SetActive(false);

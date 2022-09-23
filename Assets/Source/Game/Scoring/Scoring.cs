@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Scoring : MonoBehaviour
+public static class Scoring
 {
-    public int score { get; private set; }
+    public static int Score { get; private set; }
 
-    public event VoidHandler OnScoreChanged;
+    public static VoidHandler OnScoreChanged;
     
-    public void AddScore(int scoreToAdd)
+    public static void AddScore(int scoreToAdd)
     {
-        score += scoreToAdd;
+        Score += scoreToAdd;
         
         OnScoreChanged?.Invoke();
     }

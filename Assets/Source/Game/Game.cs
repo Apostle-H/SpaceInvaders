@@ -9,20 +9,16 @@ public class Game : MonoBehaviour
 {
     [Header("Scripts")] 
     [SerializeField] private InputHandler inputHandler;
-        
     [SerializeField] private Player player;
-    [SerializeField] private PlayerInvoker playerInvoker;
     
     [SerializeField] private EnemyArmy enemyArmy;
     [SerializeField] private LoseZone loseZone;
     
-    [SerializeField] private Scoring scoring;
-
     [Header("UI")]
     [SerializeField] private WinView winView;
     [SerializeField] private LoseView loseView;
 
-    public GameState _gameState { get; private set; }
+    public GameState GameState { get; private set; }
 
     private void Awake()
     {
@@ -39,19 +35,19 @@ public class Game : MonoBehaviour
     {
         Stop();
         
-        winView.Win(scoring.score);
+        winView.Win(Scoring.Score);
     }
 
     private void Lose()
     {
         Stop();
 
-        loseView.Lose(scoring.score);
+        loseView.Lose(Scoring.Score);
     }
 
     private void Play()
     {
-        _gameState = GameState.play;
+        GameState = GameState.play;
     }
 
     public static void Restart()
@@ -61,9 +57,9 @@ public class Game : MonoBehaviour
 
     private void Stop()
     {
-        _gameState = GameState.stop;
+        GameState = GameState.stop;
 
-        playerInvoker.enabled = false;
+        inputHandler.enabled = false;
         enemyArmy.enabled = false;
     }
 }

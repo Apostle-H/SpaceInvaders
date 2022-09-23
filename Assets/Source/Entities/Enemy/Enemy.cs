@@ -32,18 +32,18 @@ public class Enemy : MonoBehaviour, IEntity
     
     #endregion
 
-    public bool isAlive { get; private set; } = true;
+    public bool IsAlive { get; private set; } = true;
 
-    private float moveStartPosY;
+    private float _moveStartPosY;
 
-    private int currentHP;
+    private int _currentHP;
 
     protected void Awake()
     {
         _movementCommand = new MovementCommand();
         _shootCommand = new ShootCommand();
 
-        currentHP = enemySettingsSO.HP;
+        _currentHP = enemySettingsSO.HP;
     }
 
     private void FixedUpdate()
@@ -53,18 +53,18 @@ public class Enemy : MonoBehaviour, IEntity
             return;
         }
 
-        float pathLenght = moveStartPosY - transform.position.y;
+        float pathLenght = _moveStartPosY - transform.position.y;
         if (Mathf.Abs(pathLenght) >= 1f)
         {
             _movementCommand.Stop(rb);
-            transform.position = new Vector2(transform.position.x, moveStartPosY - 1f);
+            transform.position = new Vector2(transform.position.x, _moveStartPosY - 1f);
             OnStop?.Invoke();
         }
     }
 
     public void PerformMove(Vector2 direction)
     {
-        moveStartPosY = Mathf.Ceil(transform.position.y);
+        _moveStartPosY = Mathf.Ceil(transform.position.y);
         _movementCommand.Move(rb, direction, enemySettingsSO.MovementSpeed);
     }
     
@@ -75,9 +75,9 @@ public class Enemy : MonoBehaviour, IEntity
 
     public void TakeDamage(int damage)
     {
-        currentHP -= damage;
+        _currentHP -= damage;
 
-        if (currentHP <= 0)
+        if (_currentHP <= 0)
         {
             Die();
         }
@@ -85,7 +85,7 @@ public class Enemy : MonoBehaviour, IEntity
 
     private void Die()
     {
-        isAlive = false;
+        IsAlive = false;
         OnDie?.Invoke(enemySettingsSO.ScoreOnDefeat);
 
         renderer.enabled = false;

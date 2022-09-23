@@ -4,26 +4,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemiesPull : MonoBehaviour
+public class EnemiesPull
 {
-    [Header("Army Settings")] 
-    [SerializeField] [Range(1, 15)] private int collumns;
-    [SerializeField] [Range(1, 5)] private int rows;
+    private Transform _enemiesParentObject;
     
-    [SerializeField] private GameObject[] enemiesPrefabs;
+    private int _collumns;
+    private int _rows;
+    
+    private GameObject[] _enemiesPrefabs;
 
     public Enemy[,] Enemies { get; private set; }
 
-    private void Awake()
+    public EnemiesPull(Transform enemiesParentObject, int collumns, int rows, GameObject[] enemiesPrefabs)
     {
-        Enemies = new Enemy[collumns, rows];
+        _enemiesParentObject = enemiesParentObject;
+        _collumns = collumns;
+        _rows = rows;
+        _enemiesPrefabs = enemiesPrefabs;
+    }
+    
+    public void Init()
+    {
+        Enemies = new Enemy[_collumns, _rows];
 
         for (int rowIndex = 0; rowIndex < Enemies.GetLength(1); rowIndex++)
         {
-            int randomEnemyPrefabIndex = Random.Range(0, enemiesPrefabs.Length);
+            int randomEnemyPrefabIndex = Random.Range(0, _enemiesPrefabs.Length);
             for (int collumnIndex = 0; collumnIndex < Enemies.GetLength(0); collumnIndex++)
             {
-                Enemy tempEnemy = Instantiate(enemiesPrefabs[randomEnemyPrefabIndex], transform).GetComponent<Enemy>();
+                Enemy tempEnemy = GameObject.Instantiate(_enemiesPrefabs[randomEnemyPrefabIndex], _enemiesParentObject.transform).GetComponent<Enemy>();
                 
                 Vector2 enemyPos = CalcualteEnemyPos(collumnIndex, rowIndex);
                 tempEnemy.transform.position = enemyPos;
@@ -35,10 +44,10 @@ public class EnemiesPull : MonoBehaviour
     
     private Vector2 CalcualteEnemyPos(int collumnIndex, int rowIndex)
     {
-        bool areEnemiesEven = collumns % 2 == 0;
+        bool areEnemiesEven = _collumns % 2 == 0;
         
-        float enemyPosX = transform.position.x + (collumnIndex - (collumns / 2)) + (areEnemiesEven ? 0.5f : 0);
-        float enemyPosY = transform.position.y - rowIndex;
+        float enemyPosX = _enemiesParentObject.transform.position.x + (collumnIndex - (_collumns / 2)) + (areEnemiesEven ? 0.5f : 0);
+        float enemyPosY = _enemiesParentObject.transform.position.y - rowIndex;
 
         return new Vector2(enemyPosX, enemyPosY);
     }

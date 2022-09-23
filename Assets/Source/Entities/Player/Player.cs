@@ -8,9 +8,7 @@ using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, IEntity
 {
-    [Header("Scripts")]
-    [SerializeField] private PlayerInvoker invoker;
-    [SerializeField] private BulletsPull bulletsPull;
+    [Header("Scripts")] 
     [SerializeField] private PlayerView playerView;
     
     [Header("Components")]
@@ -19,21 +17,32 @@ public class Player : MonoBehaviour, IEntity
 
     [Header("Player Settings")] 
     [SerializeField] private PlayerSettingsSO playerSettingsSO;
+    
+    [Header("Bullet Pull Settings")]
+    [SerializeField] private Transform bulletsParentObject;
+    
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private int bulletsCount;
 
     public event VoidHandler OnDie;
+    
+    private BulletsPull _bulletsPull;
     
     private MovementCommand _movementCommand;
     private ShootCommand _shootCommand;
 
-    private int currentHP;
+    private int _currentHP;
     
     private void Awake()
     {
+        _bulletsPull = new BulletsPull(bulletsParentObject, bulletPrefab, bulletsCount);
+        _bulletsPull.Init();
+        
         _movementCommand = new MovementCommand();
         _shootCommand = new ShootCommand();
 
-        currentHP = playerSettingsSO.HP;
-        playerView.DrawHealth(currentHP);
+        _currentHP = playerSettingsSO.HP;
+        playerView.DrawHealth(_currentHP);
     }
 
     public void PerformMove(InputAction.CallbackContext ctx)
@@ -49,15 +58,15 @@ public class Player : MonoBehaviour, IEntity
 
     public void PerformShoot(InputAction.CallbackContext ctx)
     {
-        _shootCommand.Shoot(bulletsPull.GetBullet(), firePoint);
+        _shootCommand.Shoot(_bulletsPull.GetBullet(), firePoint);
     }
 
     public void TakeDamage(int damage)
     {
-        currentHP -= damage;
-        playerView.UpdateHealth(currentHP);
+        _currentHP -= damage;
+        playerView.UpdateHealth(_currentHP);
 
-        if (currentHP <= 0)
+        if (_currentHP <= 0)
         {
             Die();
         }
